@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/people/{name}', [PeopleController::class, 'show']);
+Route::get('/people/{name}/ships', [PeopleController::class, 'show']);
 
 Route::get('/episode/{number}/species', [EpisodeController::class, 'showAllSpeciesClassifications']);
 
