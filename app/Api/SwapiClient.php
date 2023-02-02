@@ -23,6 +23,9 @@ class SwapiClient extends Controller
 
     public function makeRequest(string $string): array|object|null
     {
+        if (!isset($this->swapi)) {
+            $this->swapi = $this->createHttpClient();
+        }
         $response = $this->swapi->request('GET', $string);
         return json_decode($response->getBody()->getContents()) ?? null;
     }
