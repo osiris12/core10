@@ -20,7 +20,7 @@ class EpisodeController extends SwapiClient
         $episode = $this->getEpisode($number);
         $species_classifications = [];
         if ($episode) {
-            $species_classifications = $this->species->getSpeciesClassifications($episode->species);
+            $species_classifications = [$episode->title => $this->species->getSpeciesClassifications($episode->species)];
         }
         return $species_classifications;
     }
