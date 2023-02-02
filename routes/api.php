@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\PlanetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +25,4 @@ Route::get('/people/{name}', [PeopleController::class, 'show']);
 
 Route::get('/episode/{number}/species', [EpisodeController::class, 'showAllSpeciesClassifications']);
 
-Route::get('/universe/population', [UniverseController::class, '']);
+Route::get('/planet/population/all', [PlanetController::class, 'showPopulationOfUniverse']);
