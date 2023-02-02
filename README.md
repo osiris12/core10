@@ -28,3 +28,12 @@ The setup for this app is like any other plain laravel application.
 The [api documentation](https://documenter.getpostman.com/view/960715/2s935mr4wZ) was created with Postman.
 
 I have also deployed a [demo application](https://phplaravel-480752-3242112.cloudwaysapps.com/) that is hosted on Cloudways.
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  php artisan test
+```
+Note: The app url will have to be properly configured for the tests to pass.
