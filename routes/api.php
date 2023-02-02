@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\PeopleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/people/{name}', [PeopleController::class, 'show']);
+
+Route::get('/classifications/episode/{number}', [EpisodeController::class, 'showAllSpeciesClassifications']);

@@ -2,9 +2,10 @@
 
 namespace App\Api;
 
+use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 
-class SwapiClient
+class SwapiClient extends Controller
 {
     public Client $swapi;
 
