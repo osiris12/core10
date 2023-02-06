@@ -16,23 +16,45 @@ class SwapiTest extends TestCase
      */
     public function test_making_a_successful_api_request_for_ships_of_character()
     {
-        $response = $this->get('/api/people/luke/ships');
+        $expected_data = [
+            'Luke Skywalker' => [
+                ['name' => 'X-wing'],
+                ["name" => "Imperial shuttle"]
+            ]
+        ];
 
-        $response->assertStatus(200);
+        $response = $this->getJson('api/people/luke/ships');
+
+        $response
+            ->assertJsonIsObject()
+            ->assertJson($expected_data)
+            ->assertStatus(200);
+
     }
 
     public function test_making_a_failed_api_request_for_ships_of_character()
     {
         $response = $this->get('/api/people/randomlettersasd/ships');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function test_making_a_successful_api_request_for_species_classifications()
     {
-        $response = $this->get('/api/episode/1/species');
+        $expected_data = [
+            "A New Hope" => [
+                "Human" => [
+                    "Classification" => "mammal"
+                ]
+            ]
+        ];
 
-        $response->assertStatus(200);
+        $response = $this->getJson('api/episode/1/species');
+
+        $response
+            ->assertJsonIsObject()
+            ->assertJson($expected_data)
+            ->assertStatus(200);
     }
 
     public function test_making_a_failed_api_request_for_species_classifications()
@@ -44,16 +66,24 @@ class SwapiTest extends TestCase
 
     public function test_making_a_successful_api_request_for_population_of_universe()
     {
-        $response = $this->get('/api/planet/population/all');
+        $expected_data = [
+            "Total population of the Star Wars universe" => 1711401432500
+        ];
 
-        $response->assertStatus(200);
+
+        $response = $this->getJson('/api/planet/population/all');
+
+        $response
+            ->assertJsonIsObject()
+            ->assertJson($expected_data)
+            ->assertStatus(200);
     }
 
     public function test_making_a_failed_api_request_for_population_of_universe()
     {
         $response = $this->get('/api/planet/population/allsas');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
 }
