@@ -3,13 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Api\SwapiClient;
+use Illuminate\Http\Response;
 
 class PeopleController extends SwapiClient
 {
-
-    public function show(string $name)
+    public function person(string $name): Response
     {
-        $person = $this->getPerson($name);
+        $person = $this->getPerson($name) ?? null;
+        if($person) {
+            return response((array) $person, 200);
+        } else {
+            return response(["Error" => "$name does not exist in the star wars universe."], 404);
+        }
+    }
+
+    public function ships(string $name): Response
+    {
+        $person = $this->getPerson($name) ?? null;
         if($person) {
             $starships = $this->getAssociatedStarships($person->starships);
             return response([$person->name => $starships], 200);

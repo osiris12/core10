@@ -4,6 +4,10 @@ namespace App\Api;
 
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Response;
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Log;
 
 class SwapiClient extends Controller
 {
@@ -26,7 +30,12 @@ class SwapiClient extends Controller
         if (!isset($this->swapi)) {
             $this->swapi = $this->createHttpClient();
         }
-        $response = $this->swapi->request('GET', $string);
+        try {
+            $response = $this->swapi->request('GET', $string);
+        } catch (ClientException $e) {
+            Log::error($e->getMessage());
+            return null;
+        }
         return json_decode($response->getBody()->getContents()) ?? null;
     }
 }

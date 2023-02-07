@@ -3,26 +3,25 @@
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\PlanetController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::controller(PeopleController::class)->group(function () {
+    Route::prefix('people')->group(function () {
+        Route::get('/{name}/ships', [PeopleController::class, 'ships']);
+        Route::get('/{name}', [PeopleController::class, 'person']);
+    });
 });
 
-Route::get('/people/{name}/ships', [PeopleController::class, 'show']);
+Route::controller(EpisodeController::class)->group(function () {
+    Route::prefix('episode')->group(function() {
+        Route::get('/{number}/species', [EpisodeController::class, 'showAllSpeciesClassifications']);
+        Route::get('/{number}', [EpisodeController::class, 'episode']);
+    });
+});
 
-Route::get('/episode/{number}/species', [EpisodeController::class, 'showAllSpeciesClassifications']);
-
-Route::get('/planet/population/all', [PlanetController::class, 'showPopulationOfUniverse']);
+Route::controller(PlanetController::class)->group(function () {
+    Route::prefix('planet')->group(function () {
+        Route::get('/population/all', [PlanetController::class, 'populationOfUniverse']);
+        Route::get('/{number}', [PlanetController::class, 'planet']);
+    });
+});

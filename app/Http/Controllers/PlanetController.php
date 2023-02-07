@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Api\SwapiClient;
+use Illuminate\Http\Response;
 
 class PlanetController extends SwapiClient
 {
-    public function showPopulationOfUniverse()
+    public function populationOfUniverse(): array
     {
         $planets = $this->getPlanets();
         return $this->getPopulationOfUniverse($planets);
@@ -33,5 +34,15 @@ class PlanetController extends SwapiClient
             }
         }
         return ['Total population of the Star Wars universe' => $population];
+    }
+
+    public function planet($number): Response
+    {
+        $planet = $this->makeRequest("planets/$number") ?? null;
+        if($planet) {
+            return response((array)$planet, 200);
+        } else {
+            return response([], 404);
+        }
     }
 }
